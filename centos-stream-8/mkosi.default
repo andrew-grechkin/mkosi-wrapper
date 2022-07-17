@@ -1,0 +1,27 @@
+; vim: filetype=dosini
+
+[Content]
+BasePackages=true
+Packages=bash-completion,coreutils,dnf,git,hostname,iproute,make,mock,neovim,passwd,rpm-build,rpm-devel,rpmlint,rpmdevtools,sqlite,sudo,systemd-networkd,tmux,util-linux-user,yum-utils,zsh
+; Password=
+WithNetwork=true
+
+[Distribution]
+Distribution=centos_epel
+Release=8-stream
+
+[Host]
+QemuHeadless=false
+QemuMem=4G
+QemuSmp=2
+Ssh=true
+
+[Output]
+Bootable=yes
+Format=gpt_ext4
+Hostname=cos8.vm
+QCow2=false
+WithUnifiedKernelImages=false
+
+[Partitions]
+RootSize=16G
