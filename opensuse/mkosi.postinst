@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+echo "Executing: $0 $*"
+
+[[ "$1" = "final" ]] && {
+	echo '%sudo ALL = (ALL) NOPASSWD:ALL' > /etc/sudoers.d/sudo-sudo
+
+	systemctl enable systemd-networkd
+	systemctl enable systemd-resolved
+
+	USERNAME="builder"
+	useradd -m -U -s /usr/bin/zsh -G sudo "$USERNAME"
+	passwd -d "$USERNAME"
+	chmod -R g+rwXs "/home/$USERNAME"
+}
+
+exit 0

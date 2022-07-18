@@ -1,0 +1,23 @@
+; vim: filetype=dosini
+
+[Content]
+BasePackages=true
+Packages=bash-completion,git,neovim,reflector,sudo,tmux,vifm,zsh
+WithNetwork=true
+
+[Distribution]
+Distribution=arch
+
+[Host]
+QemuHeadless=false
+QemuMem=4G
+QemuSmp=2
+Ssh=true
+
+[Output]
+Bootable=yes
+Format=gpt_btrfs
+Hostname=arch.vm
+
+[Partitions]
+RootSize=16G

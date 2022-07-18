@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+echo "Executing: $0 $*"
+
+[[ "$1" = "final" ]] && {
+	pacman-key --init
+	pacman-key --populate
+
+	echo '%wheel ALL = (ALL) NOPASSWD:ALL' > /etc/sudoers.d/sudo-wheel
+
+	systemctl enable reflector
+	systemctl enable systemd-networkd
+	systemctl enable systemd-resolved
+
+	USERNAME="builder"
+	useradd -m -U -s /usr/bin/zsh -G wheel "$USERNAME"
+	passwd -d "$USERNAME"
+	chmod -R g+rwXs "/home/$USERNAME"
+}
+
+exit 0

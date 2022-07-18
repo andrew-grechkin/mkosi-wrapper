@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -Eeuo pipefail
+
+echo "Executing: $0 $*"
+
+[[ "$1" = "final" ]] && {
+	systemctl enable systemd-networkd
+	systemctl enable systemd-resolved
+
+	USERNAME="builder"
+	useradd -m -U -s /usr/bin/zsh -G wheel "$USERNAME"
+	passwd -d "$USERNAME"
+	chmod -R g+rwXs "/home/$USERNAME"
+}
+
+exit 0
