@@ -1,18 +1,1 @@
-#!/usr/bin/env bash
-
-set -Eeuo pipefail
-
-echo "Executing: $0 $*"
-
-[[ "$1" = "final" ]] && {
-	crb enable
-	systemctl enable systemd-resolved
-	dnf clean all
-
-	USERNAME="builder"
-	useradd -m -U -s /usr/bin/zsh -G wheel "$USERNAME"
-	passwd -d "$USERNAME"
-	chmod -R g+rwXs "/home/$USERNAME"
-}
-
-exit 0
+../centos-stream-9/mkosi.postinst

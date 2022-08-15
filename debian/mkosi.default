@@ -7,7 +7,7 @@ WithNetwork=true
 
 [Distribution]
 Distribution=debian
-Release=unstable
+Release=testing
 
 [Host]
 QemuHeadless=false
