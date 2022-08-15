@@ -3,7 +3,7 @@
 [Content]
 BasePackages=true
 Packages=bash-completion,coreutils,dnf,git,hostname,iproute,make,mock,neovim,passwd,rpm-build,rpm-devel,rpmlint,rpmdevtools,sqlite,sudo,systemd-networkd,systemd-resolved,tmux,util-linux-user,yum-utils,zsh
-Password=
+; Password=
 WithNetwork=true
 
 [Distribution]

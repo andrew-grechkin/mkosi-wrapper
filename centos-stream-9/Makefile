@@ -1,16 +1,21 @@
-build:
+.PHONY: build login run shell
+
+RAW_IMAGE = mkosi.output/image.raw
+
+$(RAW_IMAGE):
 	sudo mkosi --force build
 
-login:
-	sudo systemd-nspawn -b -i ./mkosi.output/image.raw
+build: $(RAW_IMAGE)
 
-shell:
-	sudo systemd-nspawn -i ./mkosi.output/image.raw /usr/bin/zsh
+login: $(RAW_IMAGE)
+	sudo systemd-nspawn --capability=CAP_NET_ADMIN -b -i $(RAW_IMAGE)
 
-run:
-	qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 4096 -nic user,model=virtio-net-pci -bios /usr/share/ovmf/x64/OVMF.fd -drive format=raw,file=mkosi.output/image.raw
+run: $(RAW_IMAGE)
+	qemu-system-x86_64                                                   \
+		-enable-kvm -cpu host -smp 2 -m 4G                               \
+		-nic user,model=virtio-net-pci -bios /usr/share/ovmf/x64/OVMF.fd \
+		-vga virtio                                                      \
+		-drive format=raw,file=$(RAW_IMAGE)
 
-run-qcow2:
-	qemu-system-x86_64 -enable-kvm -cpu host -smp 2 -m 4096 -nic user,model=virtio-net-pci -bios /usr/share/ovmf/x64/OVMF.fd -drive format=qcow2,file=mkosi.output/image.qcow2
-
-.PHONY: build login shell run run-qcow2
+shell: $(RAW_IMAGE)
+	sudo systemd-nspawn --capability=CAP_NET_ADMIN -i $(RAW_IMAGE) /usr/bin/zsh

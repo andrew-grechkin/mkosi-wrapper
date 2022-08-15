@@ -5,6 +5,10 @@ set -Eeuo pipefail
 echo "Executing: $0 $*"
 
 [[ "$1" = "final" ]] && {
+	rm -rf /usr/lib/sysimage/rpm/.rpm.lock /usr/lib/sysimage/rpm/*
+	rm -rf /var/log/journal/*
+	dnf install -y --releasever 36 fedora-release sssd-client
+
 	systemctl enable systemd-networkd
 	systemctl enable systemd-resolved
 
