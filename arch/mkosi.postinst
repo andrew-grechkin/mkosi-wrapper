@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
 
-set -Eeuo pipefail
+set -xEeuo pipefail
 
 echo "Executing: $0 $*"
+
+env | sort
+id
+
+if [ "${container:-dummy}" != "mkosi" ]; then
+	exec mkosi‐chroot "$SCRIPT" "$@"
+fi
 
 [[ "$1" = "final" ]] && {
 	pacman-key --init
